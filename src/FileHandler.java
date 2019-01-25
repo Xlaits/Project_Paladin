@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.io.FileWriter;
 
@@ -90,8 +91,7 @@ public class FileHandler {
 		try(BufferedReader br = new BufferedReader(new FileReader(db + ".txt"))) {
 		    for(String line; (line = br.readLine()) != null; ) {
 		        if(line.contains(Long.toString(pCardSearch))) {
-		        	writeFile(out + ".txt", line);
-		        	br.close();
+		        	writeFile(out, line);
 		        }
 		        else{
 		        	Scanner dataEntry = new Scanner(System.in);
@@ -104,9 +104,8 @@ public class FileHandler {
 		    		System.out.print("Enter student ID: ");
 		    		newUsr.setStudentID(dataEntry.next());
 		    		newUsr.setPantherCard(pCardSearch);
-		    		writeFile(db, newUsr.toString());
+		    		writeFile(db, LocalDateTime.now().toLocalTime() +" " + newUsr.toString());
 		    		dataEntry.close();
-		        	br.close();
 		        }
 		    }
 		    // line is not visible here.
