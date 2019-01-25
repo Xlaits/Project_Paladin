@@ -22,12 +22,12 @@ public class main {
 					System.out.print("Please swipe card or m for StudentID entry: ");
 					choice = input.next();
 					//System.out.println(choice);
-					if(choice.toLowerCase() == "m") {
+					if(choice.toLowerCase().contains("m") == true) {
 						System.out.print("Enter Student ID: ");
 						usrID = input.next();
 						FileHandler.readFile(database, logfile, usrID);
 					}
-					else if(choice.toLowerCase() == "e") {
+					else if(choice.toLowerCase().contains("e") == true) {
 						running = false;
 					}
 					else {

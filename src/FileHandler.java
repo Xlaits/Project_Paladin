@@ -52,9 +52,8 @@ public class FileHandler {
 	public static void readFile(String db, String out, String search) {
 		try(BufferedReader br = new BufferedReader(new FileReader(db + ".txt"))) {
 		    for(String line; (line = br.readLine()) != null; ) {
-		        if(line.contains(search)) {
-		        	writeFile(out + ".txt", line);
-		        	br.close();
+		        if(line.contains(search) == true) {
+		        	writeFile(out, LocalDateTime.now().toLocalTime() + " " + line);
 		        }
 		        else{
 		        	Scanner dataEntry = new Scanner(System.in);
@@ -72,9 +71,9 @@ public class FileHandler {
 		    			System.out.print("Swipe PantherCard now: ");
 		    			newUsr.setPantherCard(dataEntry.nextInt());
 		    		}
-		    		writeFile(db + ".txt", newUsr.toString());
+		    		writeFile(db, newUsr.toString());
 		    		dataEntry.close();
-		        	br.close();
+		    		writeFile(out, LocalDateTime.now().toLocalTime() +" " + line);
 		        }
 		    }
 		    // line is not visible here.
@@ -90,8 +89,8 @@ public class FileHandler {
 	public static void readFile(String db, String out, long pCardSearch) {
 		try(BufferedReader br = new BufferedReader(new FileReader(db + ".txt"))) {
 		    for(String line; (line = br.readLine()) != null; ) {
-		        if(line.contains(Long.toString(pCardSearch))) {
-		        	writeFile(out, line);
+		        if(line.contains(Long.toString(pCardSearch)) == true) {
+		        	writeFile(out, LocalDateTime.now().toLocalTime() +" " + line);
 		        }
 		        else{
 		        	Scanner dataEntry = new Scanner(System.in);
@@ -104,8 +103,9 @@ public class FileHandler {
 		    		System.out.print("Enter student ID: ");
 		    		newUsr.setStudentID(dataEntry.next());
 		    		newUsr.setPantherCard(pCardSearch);
-		    		writeFile(db, LocalDateTime.now().toLocalTime() +" " + newUsr.toString());
+		    		writeFile(db, newUsr.toString());
 		    		dataEntry.close();
+		    		writeFile(out, LocalDateTime.now().toLocalTime() +" " + line);
 		        }
 		    }
 		    // line is not visible here.
