@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,6 +16,7 @@ public class FileHandler {
 			if(database.exists() == false) {
 				System.out.println(filename +" missing, creating file.");
 				database.createNewFile();
+				
 			}
 		}
 		catch(IOException e) {
@@ -25,10 +27,10 @@ public class FileHandler {
 	
 	public static void writeFile(String filename, String data){
 		try {
-			FileWriter database = new FileWriter(filename + ".txt");
+			BufferedWriter database = new BufferedWriter(new FileWriter(filename + ".txt", true));
 			database.write(data);
 			database.close();
-			System.out.println("Entries added.");
+			System.out.println("Entries added to " + filename + ".txt.");
 		}
 		catch(IOException e) {
 			System.out.println("An error occoured");
@@ -49,11 +51,16 @@ public class FileHandler {
 		}
 	}
 	
+	public static void accountCheck(Account account, String filename) {
+		//add code here.
+	}
+	
 	public static void readFile(String db, String out, String search) {
 		try(BufferedReader br = new BufferedReader(new FileReader(db + ".txt"))) {
 		    for(String line; (line = br.readLine()) != null; ) {
 		        if(line.contains(search) == true) {
-		        	writeFile(out, LocalDateTime.now().toLocalTime() + " " + line);
+		        	writeFile(out, LocalDateTime.now().toLocalTime() + " " + line + "\n");
+		        	break;
 		        }
 		        else{
 		        	Scanner dataEntry = new Scanner(System.in);
@@ -69,14 +76,18 @@ public class FileHandler {
 		    		String choice = dataEntry.next();
 		    		if(choice.toLowerCase() == "y") {
 		    			System.out.print("Swipe PantherCard now: ");
-		    			newUsr.setPantherCard(dataEntry.nextInt());
+		    			String pCardStore = dataEntry.next();
+		    			pCardStore = pCardStore.replace(";", "");
+						pCardStore = pCardStore.replace("?", "");
+						long pCard = Long.parseLong(pCardStore);
+		    			newUsr.setPantherCard(pCard);
 		    		}
+		    		//Add account check here.
 		    		writeFile(db, newUsr.toString());
 		    		dataEntry.close();
-		    		writeFile(out, LocalDateTime.now().toLocalTime() +" " + line);
+		    		writeFile(out, LocalDateTime.now().toLocalTime() + " " + newUsr.toString());
 		        }
 		    }
-		    // line is not visible here.
 		} catch (FileNotFoundException e) {
 			System.out.println("An error occoured");
 			e.printStackTrace();
@@ -90,12 +101,13 @@ public class FileHandler {
 		try(BufferedReader br = new BufferedReader(new FileReader(db + ".txt"))) {
 		    for(String line; (line = br.readLine()) != null; ) {
 		        if(line.contains(Long.toString(pCardSearch)) == true) {
-		        	writeFile(out, LocalDateTime.now().toLocalTime() +" " + line);
+		        	writeFile(out, LocalDateTime.now().toLocalTime() + " " + line + "\n");
+		        	break;
 		        }
-		        else{
+		        else {
 		        	Scanner dataEntry = new Scanner(System.in);
 		    		Account newUsr = new Account();
-		        	System.out.print("Enter Full Name: ");
+		        	System.out.print("Enter Full Name (First and Last): ");
 		    		newUsr.setNameFirst(dataEntry.next());
 		    		newUsr.setNameLast(dataEntry.next());
 		    		System.out.print("Enter school email: ");
@@ -105,7 +117,7 @@ public class FileHandler {
 		    		newUsr.setPantherCard(pCardSearch);
 		    		writeFile(db, newUsr.toString());
 		    		dataEntry.close();
-		    		writeFile(out, LocalDateTime.now().toLocalTime() +" " + line);
+		    		writeFile(out, LocalDateTime.now().toLocalTime() +" " + newUsr.toString());
 		        }
 		    }
 		    // line is not visible here.

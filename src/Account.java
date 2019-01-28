@@ -27,7 +27,7 @@ public class Account {
 	}
 	
 	public String toString() {
-		return this.nameLast + ", " + this.nameFirst + ": "+ this.email + ", " + this.studentID + ", " + this.pantherCard;
+		return this.nameLast + ", " + this.nameFirst + ": "+ this.email + ", " + this.studentID + ", " + this.pantherCard + "\n";
 	}
 	
 	//Getters and Setters

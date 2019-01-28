@@ -20,6 +20,7 @@ public class main {
 			try{
 				while(running) {
 					System.out.print("Please swipe card or m for StudentID entry: ");
+					input.reset();
 					choice = input.next();
 					//System.out.println(choice);
 					if(choice.toLowerCase().contains("m") == true) {
@@ -31,15 +32,10 @@ public class main {
 						running = false;
 					}
 					else {
-						//System.out.println("Else");
 						pCardStore = choice;
-						//System.out.println(pCardStore);
 						pCardStore = pCardStore.replace(";", "");
-						//System.out.println(pCardStore);
 						pCardStore = pCardStore.replace("?", "");
-						//System.out.println(pCardStore);
 						pCard = Long.parseLong(pCardStore);
-						//System.out.println(pCardStore);
 						FileHandler.readFile(database, logfile, pCard);
 					}
 				}
